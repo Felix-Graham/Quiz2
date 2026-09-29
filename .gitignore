@@ -1,3 +1,5 @@
 ./Cargo*
 ./prebuilt/ 
 ./target/
+flake.lock
+.flake.lock

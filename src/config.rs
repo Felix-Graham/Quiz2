@@ -117,30 +117,44 @@ pub fn config_path() -> PathBuf {
 pub fn vocab_dir() -> PathBuf {
     let dir = install_dir();
     let beside_exe = dir.join("vocab");
-    if beside_exe.is_dir() {
+
+    // Portable install (install.sh / install.bat): writable, side by side.
+    if is_writable_dir(&dir) {
         return beside_exe;
     }
-    // Nix layout: bin and share are siblings
-    let nix_share = dir
-        .parent()
-        .map(|p| p.join("share").join("frenchquiz").join("vocab"));
-    if let Some(p) = &nix_share {
-        if p.is_dir() {
-            return p.clone();
-        }
-    }
-    let data_fallback = dirs::data_dir()
+
+    // Read-only install (e.g. the Nix store). Use a writable user
+    // directory instead, so vocab files can actually be added later, and
+    // seed it once from any bundled vocab so existing topics aren't lost.
+    let user_dir = dirs::data_dir()
         .unwrap_or_else(|| PathBuf::from("."))
         .join("frenchquiz")
         .join("vocab");
-    if data_fallback.is_dir() {
-        return data_fallback;
+
+    if !user_dir.exists() {
+        let _ = fs::create_dir_all(&user_dir);
+        let nix_share = dir
+            .parent()
+            .map(|p| p.join("share").join("frenchquiz").join("vocab"));
+        let bundled = if beside_exe.is_dir() {
+            Some(beside_exe)
+        } else {
+            nix_share.filter(|p| p.is_dir())
+        };
+        if let Some(src) = bundled {
+            if let Ok(entries) = fs::read_dir(&src) {
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.extension().map(|e| e == "txt").unwrap_or(false) {
+                        if let Some(name) = path.file_name() {
+                            let _ = fs::copy(&path, user_dir.join(name));
+                        }
+                    }
+                }
+            }
+        }
     }
-    if is_writable_dir(&dir) {
-        beside_exe
-    } else {
-        data_fallback
-    }
+    user_dir
 }
 
 impl Config {

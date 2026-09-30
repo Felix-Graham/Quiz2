@@ -42,11 +42,13 @@ or add it to your system/home-manager config by pointing at this flake's
 
 **Caveat:** on Nix the binary lives in the read-only `/nix/store`, so it
 can't keep its config or vocab files next to itself the way it does on
-other platforms. The app detects this automatically and falls back to your
-normal XDG locations instead (`~/.config/frenchquiz/config.toml` and
-`~/.local/share/frenchquiz/vocab/`). Autoupdate via `git pull` also isn't
-meaningful for a Nix store path - update with `nix flake update` in your
-own checkout, or bump the flake input, instead.
+other platforms. The app detects this automatically and uses your normal
+XDG locations instead (`~/.config/frenchquiz/config.toml` and
+`~/.local/share/frenchquiz/vocab/`), copying over whatever vocab shipped
+with the flake the first time you run it so nothing is lost - after that,
+add your own files directly to that writable vocab folder. Autoupdate via
+`git pull` isn't meaningful for a Nix store path - update with
+`nix flake update` in your own checkout, or bump the flake input, instead.
 
 ### Building manually (any platform)
 
@@ -80,6 +82,34 @@ From the home menu:
 Quiz types: **typing** (you type the translation) or **multiple choice**.
 Modes: continuous (until you stop), a set number of questions, maximum
 (every loaded pair once), or timed.
+
+## Adding your own vocab files
+
+Drop a `.txt` file into the `vocab/` folder and it's picked up automatically
+- no rebuild, no restart needed for `frenchquiz check` or a fresh quiz
+session. See "Vocab files" below for the two accepted formats, and
+"Topics" for the `vocab_<N>-<M>.txt` naming that groups files together.
+
+Where `vocab/` actually is depends on how the app is installed:
+
+- **`install.sh` / `install.bat`**: the `vocab/` folder sits right next to
+  the `frenchquiz` binary in the install directory
+  (`~/.local/share/frenchquiz/vocab` on Linux/ChromeOS,
+  `%LOCALAPPDATA%\FrenchQuiz\vocab` on Windows). Just add files there.
+- **NixOS / Nix**: the binary lives in the read-only Nix store, so the app
+  keeps a separate, writable vocab folder at
+  `~/.local/share/frenchquiz/vocab` instead (seeded once from whatever
+  vocab shipped with the flake). Add your files there, not inside
+  `/nix/store`.
+- **Built manually with `cargo build`**: `vocab/` next to the binary in
+  `target/release/`, same as the install-script case.
+
+If you're sharing a git repo with friends, the simplest workflow is to add
+new `.txt` files to the repo's `vocab/` folder, commit, push, and have
+everyone run `frenchquiz update` (or `git pull` themselves) to fetch them.
+This works for `install.sh` / `install.bat` installs; on Nix, re-run
+`nix flake update` and reinstall instead, since the bundled vocab is only
+copied into your writable folder once, on first run.
 
 ## Vocab files
 
@@ -176,3 +206,12 @@ install.sh    Linux / ChromeOS installer
 install.bat   Windows installer
 flake.nix     NixOS / Nix packaging
 ```
+
+## Known limitations / next steps
+
+- The graphical installer mentioned as a stretch goal isn't built yet -
+  `install.sh` / `install.bat` are plain scripts, which the spec said not
+  to prioritize over the app itself.
+- No macOS install path (matching the original project's stated scope).
+- Alias/shortcut setup from the original Python version was dropped in
+  favor of the installers putting `frenchquiz` on your PATH directly.

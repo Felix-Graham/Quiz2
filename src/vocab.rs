@@ -218,7 +218,7 @@ pub fn merge(files: &[PathBuf]) -> Vec<Pair> {
 }
 
 pub fn write_starter_file(dir: &Path) -> std::io::Result<()> {
-    let path = dir.join("01-basics.txt");
+    let path = dir.join("");
     if path.exists() {
         return Ok(());
     }
@@ -235,7 +235,7 @@ le chien | the dog
 la maison | the house
 manger | to eat
 ";
-    fs::write(path, starter)
+    fs::write(path, "")
 }
 
 #[cfg(test)]

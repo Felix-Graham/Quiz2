@@ -1,22 +1,38 @@
 1.1 L’enrichissement dû à la mixité ethnique
 
 French	English
-accueillant(e)	welcoming
-l’ambiance (f)	atmosphere
-améliorer	to improve
-l’apport (m)	contribution
-l’assimilation (f)	integration
-assurer	to maintain
-l’attache (f)	link
-l’avis (m)	opinion
-coexister	to live together
-la colocation	house or flat sharing
-la compétence	skill
-conduire à	to lead to
-construire	to build
-contester	to argue
-le contrôle	control, checking
-décourager	to discourage
+accueillant(e)
+welcoming
+l’ambiance (f)
+atmosphere
+améliorer
+to improve
+l’apport (m)
+contribution
+l’assimilation (f)
+integration
+assurer
+to maintain
+l’attache (f)
+link
+l’avis (m)
+opinion
+coexister
+to live together
+la colocation
+house or flat sharing
+la compétence
+skill
+conduire à
+to lead to
+construire
+to build
+contester
+to argue
+le contrôle	
+control, checking
+décourager
+to discourage
 le défi	
 challenge
 le droit d’asile

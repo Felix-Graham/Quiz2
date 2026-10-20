@@ -3,3 +3,5 @@
 ./target/
 flake.lock
 .flake.lock
+.myInstall.sh
+./myInstall.sh

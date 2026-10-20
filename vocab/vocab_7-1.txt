@@ -30,7 +30,7 @@ to build
 contester
 to argue
 le contrôle	
-control, checking
+control
 décourager
 to discourage
 le défi	
@@ -44,21 +44,21 @@ to enrich
 l’enrichissement (m)
 enrichment
 l’énumération (f)
-catalogue, list
+list
 équilibré(e)	
 balanced
 l’étendard (m)	
-standard, flag
+flag
 exercer une influence
 to exert an influence
 favoriser
-to favour, promote
+to favour
 au fil du temps
 as time goes by
 à la fois
 at the same time
 franchir
-to break through, cross
+to break through
 indiscutable
 unquestionable
 l’individualité (f)
@@ -78,7 +78,7 @@ to put an end to
 meurtrier(-ère)
 deadly
 l’objectif (m)	
-objective, aim
+objective
 paisible	
 peaceful
 partager	

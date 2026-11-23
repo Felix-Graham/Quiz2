@@ -27,6 +27,7 @@ pub struct Settings {
     pub always_update: bool,
     pub ask_before_update: bool,
     pub streaks_enabled: bool,
+    pub pause_with_q: bool,
 }
 
 impl Default for Settings {
@@ -40,6 +41,7 @@ impl Default for Settings {
             always_update: false,
             ask_before_update: true,
             streaks_enabled: true,
+            pause_with_q: false,
         }
     }
 }

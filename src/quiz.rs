@@ -53,7 +53,11 @@ fn ask_typing_question(ui: &Ui, settings: &Settings, pair: &Pair, score: &mut Sc
     ui.accent(&format!("\n  Translate: {}", question));
     ui.dim("  (leave blank + Enter to stop)");
     let user = ui.read_line("  > ");
-    if user.is_empty() {
+    if settings.pause_with_q {
+        if user == "q"{
+            return false;
+        }
+    } else if user.is_empty() {
         return false;
     }
 

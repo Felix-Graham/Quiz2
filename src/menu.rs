@@ -8,12 +8,13 @@ pub fn settings_menu(cfg: &mut Config, ui: &mut Ui) {
     loop {
         ui.header("Settings");
         ui.dim(&format!(
-            "  score: {} | wide-range: {} | theme: {:?} | direction: {} | streaks: {}",
+            "  score: {} | wide-range: {} | theme: {:?} | direction: {} | streaks: {}  |  end with q: {}",
             on_off(cfg.settings.score_enabled),
             on_off(cfg.settings.wide_range_enabled),
             cfg.settings.theme,
             direction_label(cfg.settings.direction),
             on_off(cfg.settings.streaks_enabled),
+            on_off(cfg.settings.pause_with_q),
         ));
         println!();
         match ui.menu(&[
@@ -23,6 +24,7 @@ pub fn settings_menu(cfg: &mut Config, ui: &mut Ui) {
             ('d', "Toggle question direction (FR<->EN)"),
             ('k', "Toggle streak tracking"),
             ('u', "Update settings"),
+            ('b', "Toggle Pause With 'q'/<space>"),
             ('q', "Back"),
         ]) {
             's' => cfg.settings.score_enabled = !cfg.settings.score_enabled,
@@ -42,6 +44,7 @@ pub fn settings_menu(cfg: &mut Config, ui: &mut Ui) {
             }
             'k' => cfg.settings.streaks_enabled = !cfg.settings.streaks_enabled,
             'u' => update_settings_menu(cfg, ui),
+            'b' => cfg.settings.pause_with_q = !cfg.settings.pause_with_q,
             'q' => {
                 let _ = cfg.save();
                 return;

@@ -53,6 +53,7 @@ mod tests {
             always_update: false,
             ask_before_update: true,
             streaks_enabled: true,
+            pause_with_q: false,
         }
     }
 
